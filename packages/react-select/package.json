@@ -1,0 +1,25 @@
+{
+  "name": "@itsjonq/react-select",
+  "version": "1.0.0",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": "^16.9.0"
+  },
+  "dependencies": {
+    "classnames": "2.2.6",
+    "styled-components": "4.3.2"
+  },
+  "devDependencies": {
+    "@itsjonq/react-select-package-builder": "^1.0.0",
+    "@types/classnames": "2.2.9"
+  },
+  "scripts": {
+    "build": "package-builder"
+  },
+  "license": "MIT"
+}
