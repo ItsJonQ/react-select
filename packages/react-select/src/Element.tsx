@@ -2,6 +2,11 @@ import * as React from 'react';
 
 import {useSelectContext} from './Context';
 
+/**
+ * TODO:
+ * This will eventually be removed. Currently being used for reference and
+ * interacting with Context to hook up the state => components.
+ */
 export const SelectElement = () => {
   const {classes, options, onChange, value} = useSelectContext();
 

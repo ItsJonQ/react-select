@@ -61,11 +61,19 @@ export const SelectProvider: React.FC<SelectProviderProps> = props => {
     ...additionalProps
   } = props;
 
+  /**
+   * TODO:
+   * Will be refactored to use reselect for memoization
+   */
   const options = serializeOptions(optionsProp);
   const initialItem = getInitialItem(options, valueProp);
 
   const classes = classnames(defaultContext.classes, className);
 
+  /**
+   * TODO:
+   * Refactor to use useReducer to better organize chunks of state
+   */
   const [selected, setSelectedState] = useState(initialItem);
   const [value, setValue] = useState(valueProp);
 
