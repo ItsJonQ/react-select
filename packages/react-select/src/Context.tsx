@@ -3,8 +3,14 @@ import classnames from 'classnames';
 
 const {useState, createContext, useContext} = React;
 
-import {getInitialItem, noop} from './utils/index';
-import {SelectContextProps, SelectOptions, SelectValue} from './types';
+import {
+  SelectContextProps,
+  SelectOnChange,
+  SelectOptions,
+  SelectValue,
+} from './types';
+import {CLASS_NAMES} from './classNames';
+import {getInitialItem, getItemByValue, noop, serializeOptions} from './utils';
 
 export const defaultProps = {
   disabled: false,
@@ -14,14 +20,15 @@ export const defaultProps = {
 
 export const defaultContext: SelectContextProps = {
   ...defaultProps,
-  classes: 'SelectComponent',
+  classes: CLASS_NAMES.Base,
 };
 
 export interface ContextProps {
   classes: string;
   disabled: boolean;
   options: SelectOptions;
-  onChange: (SelectValue, {event: HTMLInputElement}) => void;
+  onChange: SelectOnChange;
+  selected: any;
   value: SelectValue;
 }
 
@@ -45,18 +52,43 @@ export interface SelectProviderProps {
 
 export const SelectProvider: React.FC<SelectProviderProps> = props => {
   const {Provider} = SelectContext;
-  const {children, className, options, value, ...additionalProps} = props;
+  const {
+    children,
+    className,
+    options: optionsProp,
+    onChange: onChangeProp,
+    value: valueProp,
+    ...additionalProps
+  } = props;
 
-  const initialItem = getInitialItem(options, value);
-  const [selected] = useState(initialItem);
+  const options = serializeOptions(optionsProp);
+  const initialItem = getInitialItem(options, valueProp);
 
   const classes = classnames(defaultContext.classes, className);
+
+  const [selected, setSelectedState] = useState(initialItem);
+  const [value, setValue] = useState(valueProp);
+
+  const setSelected = item => {
+    setSelectedState(item);
+  };
+
+  const onChange: SelectOnChange = (value, props) => {
+    const nextItem = getItemByValue(options, value);
+
+    setSelected(nextItem);
+    setValue(value);
+
+    onChangeProp(value, props);
+  };
 
   const contextProps = {
     ...additionalProps,
     classes,
+    onChange,
     options,
     selected,
+    setSelected,
     value,
   };
 

@@ -1,0 +1,40 @@
+{
+  "Create React Functional Component": {
+    "prefix": "!RFC",
+    "body": [
+      "import * as React from 'react';",
+      "import styled from 'styled-components';",
+      "import classnames from 'classnames';",
+      "",
+      "import {CLASS_NAMES} from '../classNames';",
+      "",
+      "export interface Select${TM_FILENAME_BASE}Props {",
+      "  className?: string;",
+      "  children: React.ReactNode;",
+      "}",
+      "",
+      "export const defaultProps = {",
+      "  className: '',",
+      "};",
+      "",
+      "export const ${TM_FILENAME_BASE}: React.FC<Select${TM_FILENAME_BASE}Props> = props => {",
+      "  const mergedProps = {...defaultProps, ...props};",
+      "  const {className, ...additionalProps} = mergedProps;",
+      "",
+      "  const classes = classnames(className, CLASS_NAMES.${TM_FILENAME_BASE});",
+      "",
+      "  return (",
+      "    <${TM_FILENAME_BASE}UI {...additionalProps} className={classes}>",
+      "      Children",
+      "    </${TM_FILENAME_BASE}UI>",
+      "  );",
+      "};",
+      "",
+      "export const ${TM_FILENAME_BASE}UI = styled.div``;",
+      "",
+      "export default ${TM_FILENAME_BASE};",
+      ""
+    ],
+    "description": "Scaffolds a basic React Functional Component"
+  }
+}

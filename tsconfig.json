@@ -6,6 +6,8 @@
     "jsx": "react",
     "lib": ["esnext", "dom"],
 
+    "allowJs": true,
+
     /* most things are using babel so support interop */
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,

@@ -1,8 +1,15 @@
 import React from 'react';
 import {storiesOf} from '@storybook/react';
+import {createGlobalStyle} from 'styled-components';
 import {Select} from './Select';
 
 const stories = storiesOf('Select', module);
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+`;
 
 stories.add('Default', () => {
   const props = {
@@ -26,5 +33,10 @@ stories.add('Default', () => {
     onChange: value => console.log(value),
   };
 
-  return <Select {...props} />;
+  return (
+    <>
+      <GlobalStyle />
+      <Select {...props} />
+    </>
+  );
 });

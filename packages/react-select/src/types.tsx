@@ -3,6 +3,8 @@ import * as React from 'react';
 export type SelectOptions = Array<any>;
 export type SelectValue = string;
 
+export type SelectOnChange = (SelectValue, {event: HTMLInputElement}) => void;
+
 export interface SelectBaseProps {
   disabled?: boolean;
   options?: SelectOptions;
