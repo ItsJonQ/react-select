@@ -3,7 +3,7 @@ import * as React from 'react';
 import {useSelectContext} from './Context';
 
 export const SelectElement = () => {
-  const {classes, options, onChange, value} = useSelectContext() as any;
+  const {classes, options, onChange, value} = useSelectContext();
 
   const handleOnChange = event => {
     onChange(event.target.value, event);

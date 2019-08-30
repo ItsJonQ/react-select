@@ -1,17 +1,33 @@
 import * as React from 'react';
 
-import {SelectProps} from './types';
-import {SelectProvider, defaultProps} from './Context';
+import {SelectOptions, SelectValue} from './types';
+import {SelectProvider, SelectProviderProps} from './Context';
 import {SelectElement} from './Element';
 
-export const Select = (props: SelectProps) => {
+export interface SelectProps {
+  className?: string;
+  disabled?: boolean;
+  options?: SelectOptions;
+  onChange?: (SelectValue, {event: HTMLInputElement}) => void;
+  value?: SelectValue;
+}
+
+export const Select: React.FC<SelectProps> = props => {
+  const mergedProps: SelectProviderProps = {...defaultProps, ...props};
+
   return (
-    <SelectProvider {...props}>
+    <SelectProvider {...mergedProps}>
       <SelectElement />
     </SelectProvider>
   );
 };
 
-Select.defaultProps = defaultProps as Partial<SelectProps>;
+const defaultProps = {
+  className: '',
+  disabled: false,
+  options: [],
+  onChange: () => {},
+  value: '',
+};
 
 export default Select;

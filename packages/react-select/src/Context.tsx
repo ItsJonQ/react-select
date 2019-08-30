@@ -4,7 +4,7 @@ import classnames from 'classnames';
 const {useState, createContext, useContext} = React;
 
 import {getInitialItem, noop} from './utils/index';
-import {SelectContextProps, SelectProps} from './types';
+import {SelectContextProps, SelectOptions, SelectValue} from './types';
 
 export const defaultProps = {
   disabled: false,
@@ -17,11 +17,33 @@ export const defaultContext: SelectContextProps = {
   classes: 'SelectComponent',
 };
 
-export const SelectContext = createContext(defaultContext);
-export const useSelectContext = (): SelectContextProps =>
-  useContext(SelectContext);
+export interface ContextProps {
+  classes: string;
+  disabled: boolean;
+  options: SelectOptions;
+  onChange: (SelectValue, {event: HTMLInputElement}) => void;
+  value: SelectValue;
+}
 
-export const SelectProvider = (props: SelectProps) => {
+export const SelectContext = createContext<ContextProps | undefined>(undefined);
+
+export const useSelectContext = (): ContextProps => {
+  const ctx = useContext(SelectContext);
+  if (!ctx) {
+    throw new Error('Please use SelectProvider');
+  }
+  return ctx;
+};
+
+export interface SelectProviderProps {
+  className?: string;
+  disabled: boolean;
+  options: SelectOptions;
+  onChange: (SelectValue, {event: HTMLInputElement}) => void;
+  value: SelectValue;
+}
+
+export const SelectProvider: React.FC<SelectProviderProps> = props => {
   const {Provider} = SelectContext;
   const {children, className, options, value, ...additionalProps} = props;
 
