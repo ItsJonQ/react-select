@@ -1,5 +1,5 @@
 import {isDefined} from './index';
-import {SelectOptions, SelectValue} from '../types';
+import {SelectOptions, SelectValue} from '../Select.types';
 
 export function serializeOptions(options: SelectOptions) {
   return options.map(item => {

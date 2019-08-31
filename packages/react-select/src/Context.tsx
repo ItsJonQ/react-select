@@ -4,33 +4,32 @@ import classnames from 'classnames';
 const {useState, createContext, useContext} = React;
 
 import {
-  SelectContextProps,
+  SelectProviderProps,
+  ContextProps,
   SelectOnChange,
-  SelectOptions,
-  SelectValue,
-} from './types';
+} from './Select.types';
 import {CLASS_NAMES} from './classNames';
-import {getInitialItem, getItemByValue, noop, serializeOptions} from './utils';
+import {
+  createUniqueIdFactory,
+  getInitialItem,
+  getItemByValue,
+  noop,
+  serializeOptions,
+} from './utils';
 
 export const defaultProps = {
+  className: '',
   disabled: false,
+  isBlock: false,
   options: [],
   onChange: noop,
+  value: '',
 };
 
-export const defaultContext: SelectContextProps = {
+export const defaultContext = {
   ...defaultProps,
   classes: CLASS_NAMES.Base,
 };
-
-export interface ContextProps {
-  classes: string;
-  disabled: boolean;
-  options: SelectOptions;
-  onChange: SelectOnChange;
-  selected: any;
-  value: SelectValue;
-}
 
 export const SelectContext = createContext<ContextProps | undefined>(undefined);
 
@@ -42,19 +41,14 @@ export const useSelectContext = (): ContextProps => {
   return ctx;
 };
 
-export interface SelectProviderProps {
-  className?: string;
-  disabled: boolean;
-  options: SelectOptions;
-  onChange: (SelectValue, {event: HTMLInputElement}) => void;
-  value: SelectValue;
-}
+const createId = createUniqueIdFactory('react-select');
 
 export const SelectProvider: React.FC<SelectProviderProps> = props => {
   const {Provider} = SelectContext;
   const {
     children,
     className,
+    id: idProp,
     options: optionsProp,
     onChange: onChangeProp,
     value: valueProp,
@@ -74,6 +68,7 @@ export const SelectProvider: React.FC<SelectProviderProps> = props => {
    * TODO:
    * Refactor to use useReducer to better organize chunks of state
    */
+  const [id] = useState(idProp || createId());
   const [selected, setSelectedState] = useState(initialItem);
   const [value, setValue] = useState(valueProp);
 
@@ -94,6 +89,7 @@ export const SelectProvider: React.FC<SelectProviderProps> = props => {
     ...additionalProps,
     classes,
     onChange,
+    id,
     options,
     selected,
     setSelected,

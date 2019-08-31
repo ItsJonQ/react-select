@@ -1,7 +1,7 @@
 export const BASE_CLASS_NAME = 'Select';
 
 export const CLASS_NAMES = {
-  Arrow: 'SelectComponentArrow',
+  Arrows: 'SelectComponentArrows',
   Base: 'SelectComponent',
   Button: 'SelectComponentButton',
   Menu: 'SelectComponentMenu',

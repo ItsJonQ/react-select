@@ -8,4 +8,6 @@ export {default as Select} from './Select';
 
 export {default as classNames} from './classNames';
 
+export * from './Select.types';
+
 export default Select;
